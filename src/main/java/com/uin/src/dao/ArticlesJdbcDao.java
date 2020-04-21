@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 @Repository
 public class ArticlesJdbcDao {
      @Resource
-     JdbcTemplate articlesJdbcTemplate;
+     JdbcTemplate secondaryJdbcTemplate;
 
      public Articles findById(Long id){
-         return   articlesJdbcTemplate.queryForObject("SELECT * FROM hello_articles.articles where id=?",new Object[]{id}, new BeanPropertyRowMapper<>(Articles.class));
+         return   secondaryJdbcTemplate.queryForObject("SELECT * FROM hello_articles.articles where id=?",new Object[]{id}, new BeanPropertyRowMapper<>(Articles.class));
      }
 }

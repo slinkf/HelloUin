@@ -1,5 +1,6 @@
 package com.uin.src.config;
 
+import com.atomikos.jdbc.AtomikosDataSourceBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -13,27 +14,25 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
      @Primary
-     @Bean(name = "primaryDataSource")
-     @Qualifier("primaryDataSource")
-     @ConfigurationProperties("spring.datasource.primary")
+     @Bean(name = "primaryDataSource",initMethod="init", destroyMethod="close")
+     @ConfigurationProperties("primarydb")
      public DataSource primaryDataSource(){
-          return DataSourceBuilder.create().build();
+          return new AtomikosDataSourceBean();
      }
 
-     @Bean(name = "articlesDataSource")
-     @Qualifier("articlesDataSource")
-     @ConfigurationProperties("spring.datasource.articles")
-     public DataSource articlesDataSource(){
-          return DataSourceBuilder.create().build();
+     @Bean(name = "secondaryDataSource",initMethod="init", destroyMethod="close")
+     @ConfigurationProperties("secondarydb")
+     public DataSource secondaryDataSource(){
+          return new AtomikosDataSourceBean();
      }
 
-     @Bean(name = "primaryJdbcTemplate")
+     @Bean
      public JdbcTemplate primaryJdbcTemplate(@Qualifier("primaryDataSource") DataSource dataSource){
           return new JdbcTemplate(dataSource);
      }
 
-     @Bean(name = "articlesJdbcTemplate")
-     public JdbcTemplate articlesJdbcTemplate(@Qualifier("articlesDataSource") DataSource dataSource){
+     @Bean
+     public JdbcTemplate secondaryJdbcTemplate(@Qualifier("secondaryDataSource") DataSource dataSource){
          return new JdbcTemplate(dataSource);
      }
 
