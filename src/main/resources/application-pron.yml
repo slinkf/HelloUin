@@ -1,0 +1,7 @@
+server:
+  port: 8080
+
+
+limit:
+  minMoney: 1
+  desc: "最少的金钱配置${limit.minMoney}"

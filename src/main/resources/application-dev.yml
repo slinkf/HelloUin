@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+
+limit:
+  minMoney: 100
+  desc: "最少的金钱配置${limit.minMoney}"
+
+##数据库的配置
+spring:
+  datasource:
+    primary:
+      username: root
+      password: 12345678
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/hello_uin?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    articles:
+      username: root
+      password: 12345678
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      ##多个表要用jdbc-url
+      jdbc-url: jdbc:mysql://localhost:3306/hello_articles?useUnicode=true&characterEncoding=utf-8&useSSL=false
+
